@@ -1,6 +1,6 @@
 # Caster Curios Bonus Mod
 
-**Caster Curios Bonus** is a Minecraft mod that introduces a variety of magical curios—unique accessories that enhance your spellcasting abilities. These powerful items can be found in loot chests throughout the world and offer a wide range of effects, from boosting spell power to manipulating cooldowns and health.
+**Caster Curios Bonus** introduces a variety of curios accessories for **Iron's Spells 'n Spellbooks**. These powerful items can be found in loot chests throughout the world and offer a wide range of effects, from boosting spell power to manipulating cooldowns and health. Currently most curios are inspired by **ARAM: Mayhem (海克斯大乱斗 in CN)** of LOL.
 
 ## Features
 
