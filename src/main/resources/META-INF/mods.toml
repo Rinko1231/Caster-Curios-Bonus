@@ -1,0 +1,14 @@
+modLoader="javafml"
+loaderVersion="[43,)"
+license="GPLv3"
+
+[[mods]]
+modId="caster_curios_bonus"
+version="1.20.1-1.0.0"
+#logoFile="logo.png" #optional
+displayName="Caster Curios Bonus"
+authors="Rinko1231"
+description='''
+Add some curios for ISS.
+Thanks to some Free assets from ssugmi, Kyrises!
+'''

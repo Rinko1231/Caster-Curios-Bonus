@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "caster_curios_bonus:item/all_by_movement"
+  }
+}
