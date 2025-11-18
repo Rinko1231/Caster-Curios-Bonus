@@ -1,0 +1,33 @@
+{
+  "item_group.caster_curios_bonus": "灿奇术饰",
+  "item.caster_curios_bonus.eureka": "尤里卡",
+  "item.caster_curios_bonus.eureka.desc": "基于各流派额外法术强度获得冷却缩减。",
+  "tooltip.item.caster_curios_bonus.eureka.cd_bonus": "额外冷却缩减：+%s%%",
+  "item.caster_curios_bonus.giant_killer": "巨人杀手",
+  "item.caster_curios_bonus.giant_killer.desc": "对体型大于你的生物造成更多伤害。",
+  "item.caster_curios_bonus.mana_overflow": "溢流魔力",
+  "item.caster_curios_bonus.mana_overflow.desc": "消耗更多法力，但造成更多法术伤害，获得更多治疗效果。",
+  "item.caster_curios_bonus.mind_to_matter": "由心及物",
+  "item.caster_curios_bonus.mind_to_matter.desc": "基于法力值获得额外生命值。",
+  "tooltip.item.caster_curios_bonus.mind_to_matter.health_bonus": "额外生命值：%s",
+  "item.caster_curios_bonus.all_by_movement": "全凭身法",
+  "item.caster_curios_bonus.all_by_movement.desc": "你的闪现类法术冷却减半。",
+  "item.caster_curios_bonus.night_hunter": "夜狩",
+  "item.caster_curios_bonus.night_hunter.desc": "击杀后获得真实隐身和速度效果。",
+  "item.caster_curios_bonus.crimson_pledge": "猩红契约",
+  "item.caster_curios_bonus.crimson_pledge.desc": "法术的生命偷取效果也会治疗身边的盟友。",
+  "item.caster_curios_bonus.venomous_assault": "猛毒侵袭",
+  "item.caster_curios_bonus.venomous_assault.desc": "你的非自然法术伤害将引爆目标身上的中毒效果，直接结算伤害。",
+
+  "item.caster_curios_bonus.reckless_utterance": "狂言之冠",
+  "item.caster_curios_bonus.reckless_utterance.desc": "允许你释放奥术超载",
+  "tooltip.item.caster_curios_bonus.reckless_utterance.overload": "过载值：%s",
+  "tooltip.item.caster_curios_bonus.reckless_utterance.silent": "沉默时间：%s秒",
+  "message.caster_curios_bonus.reckless_utterance.silent_cast_blocked": "你累极了，无法施法！(剩余%s秒)",
+  "message.caster_curios_bonus.reckless_utterance.become_silent": "你已因过载而陷入沉默。",
+
+  "spell.caster_curios_bonus.arcane_overdrive": "奥术超载",
+  "effect.caster_curios_bonus.arcane_overdrive": "奥术超载",
+  "spell.caster_curios_bonus.arcane_overdrive.guide": "短时间内，施法无消耗无冷却，但会积累过载值，一旦过载值满，你将被沉默。"
+
+}
