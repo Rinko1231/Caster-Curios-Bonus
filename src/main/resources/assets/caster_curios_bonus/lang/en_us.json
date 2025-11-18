@@ -1,0 +1,33 @@
+{
+  "item_group.caster_curios_bonus": "Caster Curios Bonus",
+
+  "item.caster_curios_bonus.eureka": "Eureka",
+  "item.caster_curios_bonus.eureka.desc": "Gain cooldown reduction based on your extra spell power across all schools.",
+  "tooltip.item.caster_curios_bonus.eureka.cd_bonus": "Cooldown Reduction Bonus: +%s%%",
+  "item.caster_curios_bonus.giant_killer": "Giant Killer",
+  "item.caster_curios_bonus.giant_killer.desc": "Deal more spell damage to creatures larger than yourself.",
+  "item.caster_curios_bonus.mana_overflow": "Mana Overflow",
+  "item.caster_curios_bonus.mana_overflow.desc": "Consume more mana, but your spells deal and heal for more.",
+  "item.caster_curios_bonus.mind_to_matter": "Mind to Matter",
+  "item.caster_curios_bonus.mind_to_matter.desc": "Gain extra maximum health based on your maximum mana.",
+  "tooltip.item.caster_curios_bonus.mind_to_matter.health_bonus": "Max Health Bonus: %s",
+  "item.caster_curios_bonus.all_by_movement": "All by Movement",
+  "item.caster_curios_bonus.all_by_movement.desc": "Blink-type spells have their cooldowns halved.",
+  "item.caster_curios_bonus.night_hunter": "Night Hunter",
+  "item.caster_curios_bonus.night_hunter.desc": "Gain true invisibility and speed after killing an enemy.",
+  "item.caster_curios_bonus.crimson_pledge": "Crimson Pledge",
+  "item.caster_curios_bonus.crimson_pledge.desc": "Your spell lifesteal also heals nearby allies.",
+  "item.caster_curios_bonus.venomous_assault": "Venomous Assault",
+  "item.caster_curios_bonus.venomous_assault.desc": "Your non-Nature spells detonate Poison on the target, dealing its remaining damage instantly.",
+
+  "item.caster_curios_bonus.reckless_utterance": "Reckless Utterance",
+  "item.caster_curios_bonus.reckless_utterance.desc": "Allow you to cast Arcane Overdrive",
+  "tooltip.item.caster_curios_bonus.reckless_utterance.overload": "Overload: %s",
+  "tooltip.item.caster_curios_bonus.reckless_utterance.silent": "Silent Time: %ss",
+  "message.caster_curios_bonus.reckless_utterance.silent_cast_blocked": "You are overwhelmed and cannot cast spells! (%s s left)",
+  "message.caster_curios_bonus.reckless_utterance.become_silent": "You are overwhelmed and cannot cast spells!",
+
+  "spell.caster_curios_bonus.arcane_overdrive": "Arcane Overdrive",
+  "effect.caster_curios_bonus.arcane_overdrive": "Arcane Overdrive",
+  "spell.caster_curios_bonus.arcane_overdrive.guide": "For a short duration, your spells cost no mana and have no cooldowns, but they generate Overload. Once your Overload is full, you will be silenced."
+}
