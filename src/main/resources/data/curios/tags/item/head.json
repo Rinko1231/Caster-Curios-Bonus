@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+
+    "caster_curios_bonus:mana_overflow",
+    "caster_curios_bonus:reckless_utterance"
+
+  ]
+}

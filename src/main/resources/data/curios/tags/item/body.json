@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "caster_curios_bonus:all_by_movement",
+    "caster_curios_bonus:zephyr_boon"
+  ]
+}
