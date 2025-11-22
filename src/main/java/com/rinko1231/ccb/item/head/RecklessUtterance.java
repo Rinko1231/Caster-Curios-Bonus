@@ -72,35 +72,6 @@ public class RecklessUtterance extends SpellCuriosItem  {
     }
 
     @SubscribeEvent
-    public static void onTooltip(ItemTooltipEvent event) {
-        Player player = Minecraft.getInstance().player;
-        if (player == null) return;
-
-        ItemStack stack = event.getItemStack();
-        if (!(stack.getItem() instanceof RecklessUtterance)) {
-            return;
-        }
-
-        OverloadSyncedData data = OverloadClientData.get(player);
-            int overload = data.getOverload();
-            int silentTicks = data.getSilentTicks();
-            float silentSeconds = silentTicks / 20f;
-            // 本地化 key: tooltip.item.caster_curios_bonus.reckless_utterance.overload
-            Component messageOverload = Component.translatable(
-                    "tooltip.item.caster_curios_bonus.reckless_utterance.overload",
-                    overload
-            ).withStyle(ChatFormatting.RED);
-            event.getToolTip().add(messageOverload);
-
-            Component messageSilent = Component.translatable(
-                    "tooltip.item.caster_curios_bonus.reckless_utterance.silent",
-                    String.format("%.1f", silentSeconds)
-            ).withStyle(ChatFormatting.DARK_RED);
-            event.getToolTip().add(messageSilent);
-
-    }
-
-    @SubscribeEvent
     public static void inASilentWay(SpellPreCastEvent event) {
         event.getEntity().getCapability(OverloadProvider.CAPABILITY).ifPresent(data -> {
             if (data.getSilentTicks() > 0) {

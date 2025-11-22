@@ -88,29 +88,4 @@ public class Eureka extends SimpleDescriptiveCurio {
     }
 
 
-    @SubscribeEvent
-    public static void onItemTooltip(ItemTooltipEvent event) {
-        ItemStack stack = event.getItemStack();
-
-        // 只对 Eureka 生效
-        if (!(stack.getItem() instanceof Eureka)) {
-            return;
-        }
-
-        Player player = Minecraft.getInstance().player;
-        if (player == null) return;
-
-
-        double powerBonus = SpellPowerHelper.getTotalExtraSpellPower(player);
-        double extraCD = powerBonus * CasterCuriosBonusConfig.EurekaExtraCDMultiplier.get();
-
-        double percent = extraCD * 100.0;
-
-        Component line = Component.translatable(
-                "tooltip.item.caster_curios_bonus.eureka.cd_bonus",
-                String.format("%.1f", percent)
-        ).withStyle(ChatFormatting.AQUA);
-
-        event.getToolTip().add(line);
-    }
 }

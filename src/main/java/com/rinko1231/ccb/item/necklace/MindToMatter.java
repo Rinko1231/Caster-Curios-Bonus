@@ -86,31 +86,4 @@ public class MindToMatter extends SimpleDescriptiveCurio {
         }
     }
 
-    @SubscribeEvent
-    public static void onItemTooltip(ItemTooltipEvent event) {
-        ItemStack stack = event.getItemStack();
-
-
-        if (!(stack.getItem() instanceof MindToMatter)) {
-            return;
-        }
-
-        Player player = Minecraft.getInstance().player;
-        if (player == null) return;
-
-
-        var manaAttr = player.getAttribute(AttributeRegistry.MAX_MANA.get());
-        if (manaAttr == null) return;
-
-        double maxMana = manaAttr.getValue();
-
-        double extraHealth = maxMana * CasterCuriosBonusConfig.mindToMatterHPMultiplier.get();
-
-        Component line = Component.translatable(
-                "tooltip.item.caster_curios_bonus.mind_to_matter.health_bonus",
-                String.format("%.1f", extraHealth)
-        ).withStyle(ChatFormatting.AQUA);
-
-        event.getToolTip().add(line);
-    }
 }

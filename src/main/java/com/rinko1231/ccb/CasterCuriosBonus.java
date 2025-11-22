@@ -6,18 +6,30 @@ import com.mojang.logging.LogUtils;
 import com.rinko1231.ccb.config.CasterCuriosBonusConfig;
 import com.rinko1231.ccb.init.*;
 
+import com.rinko1231.ccb.item.charm.Eureka;
+import com.rinko1231.ccb.item.head.RecklessUtterance;
+import com.rinko1231.ccb.item.necklace.MindToMatter;
 import com.rinko1231.ccb.network.CCBMessages;
 
+import com.rinko1231.ccb.network.data.OverloadClientData;
+import com.rinko1231.ccb.network.data.OverloadSyncedData;
+import com.rinko1231.ccb.utils.SpellPowerHelper;
+import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.compat.Curios;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -88,6 +100,89 @@ public class CasterCuriosBonus {
         Path resourcePath = ModList.get().getModFileById(MODID).getFile().findResource(new String[]{filename});
         Pack pack = Pack.readMetaAndCreate(id, displayName, false, (path) -> new PathPackResources(path, true, resourcePath), PackType.CLIENT_RESOURCES, Pack.Position.TOP, PackSource.BUILT_IN);
         event.addRepositorySource((packConsumer) -> packConsumer.accept(pack));
+    }
+
+
+    @SubscribeEvent
+    public void EurekaOnItemTooltip(ItemTooltipEvent event) {
+        ItemStack stack = event.getItemStack();
+
+        // 只对 Eureka 生效
+        if (!(stack.getItem() instanceof Eureka)) {
+            return;
+        }
+
+        Player player = event.getEntity();
+        if (player == null) return;
+
+
+        double powerBonus = SpellPowerHelper.getTotalExtraSpellPower(player);
+        double extraCD = powerBonus * CasterCuriosBonusConfig.EurekaExtraCDMultiplier.get();
+
+        double percent = extraCD * 100.0;
+
+        Component line = Component.translatable(
+                "tooltip.item.caster_curios_bonus.eureka.cd_bonus",
+                String.format("%.1f", percent)
+        ).withStyle(ChatFormatting.AQUA);
+
+        event.getToolTip().add(line);
+    }
+    @SubscribeEvent
+    public void MindToMatterOnItemTooltip(ItemTooltipEvent event) {
+        ItemStack stack = event.getItemStack();
+
+
+        if (!(stack.getItem() instanceof MindToMatter)) {
+            return;
+        }
+
+        Player player = event.getEntity();
+        if (player == null) return;
+
+
+        var manaAttr = player.getAttribute(AttributeRegistry.MAX_MANA.get());
+        if (manaAttr == null) return;
+
+        double maxMana = manaAttr.getValue();
+
+        double extraHealth = maxMana * CasterCuriosBonusConfig.mindToMatterHPMultiplier.get();
+
+        Component line = Component.translatable(
+                "tooltip.item.caster_curios_bonus.mind_to_matter.health_bonus",
+                String.format("%.1f", extraHealth)
+        ).withStyle(ChatFormatting.AQUA);
+
+        event.getToolTip().add(line);
+    }
+
+    @SubscribeEvent
+    public void RecklessOnTooltip(ItemTooltipEvent event) {
+        Player player = event.getEntity();
+        if (player == null) return;
+
+        ItemStack stack = event.getItemStack();
+        if (!(stack.getItem() instanceof RecklessUtterance)) {
+            return;
+        }
+
+        OverloadSyncedData data = OverloadClientData.get(player);
+        int overload = data.getOverload();
+        int silentTicks = data.getSilentTicks();
+        float silentSeconds = silentTicks / 20f;
+        // 本地化 key: tooltip.item.caster_curios_bonus.reckless_utterance.overload
+        Component messageOverload = Component.translatable(
+                "tooltip.item.caster_curios_bonus.reckless_utterance.overload",
+                overload
+        ).withStyle(ChatFormatting.RED);
+        event.getToolTip().add(messageOverload);
+
+        Component messageSilent = Component.translatable(
+                "tooltip.item.caster_curios_bonus.reckless_utterance.silent",
+                String.format("%.1f", silentSeconds)
+        ).withStyle(ChatFormatting.DARK_RED);
+        event.getToolTip().add(messageSilent);
+
     }
 
 }
