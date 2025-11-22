@@ -89,7 +89,7 @@ public class Eureka extends SimpleDescriptiveCurio {
             return;
         }
 
-        Player player = Minecraft.getInstance().player;
+        Player player = event.getEntity();
         if (player == null) return;
 
 

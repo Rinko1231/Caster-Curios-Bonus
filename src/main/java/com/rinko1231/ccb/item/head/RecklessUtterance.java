@@ -93,7 +93,7 @@ public class RecklessUtterance extends SpellCuriosItem  {
 
     @SubscribeEvent
     public static void onTooltip(ItemTooltipEvent event) {
-        Player player = Minecraft.getInstance().player;
+        Player player = event.getEntity();
         if (player == null) return;
 
         ItemStack stack = event.getItemStack();
