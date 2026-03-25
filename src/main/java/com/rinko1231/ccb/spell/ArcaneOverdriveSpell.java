@@ -42,6 +42,10 @@ public class ArcaneOverdriveSpell extends AbstractSpell {
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(Component.translatable("ui.irons_spellbooks.effect_length", new Object[]{Utils.timeFromTicks(10 * 20.0F, 1)}));
     }
+    @Override
+    public boolean requiresLearning() {
+        return false;
+    }
 
     public AnimationHolder getCastStartAnimation() {
         return SpellAnimations.SELF_CAST_ANIMATION;
