@@ -1,5 +1,6 @@
 package com.rinko1231.ccb.item.head;
 
+import com.rinko1231.ccb.CasterCuriosBonus;
 import com.rinko1231.ccb.capability.OverloadProvider;
 import com.rinko1231.ccb.init.MobEffectReg;
 import com.rinko1231.ccb.init.SpellReg;
@@ -8,11 +9,13 @@ import com.rinko1231.ccb.item.SpellCuriosItem;
 import com.rinko1231.ccb.network.CCBMessages;
 import com.rinko1231.ccb.network.data.OverloadClientData;
 import com.rinko1231.ccb.network.data.OverloadSyncedData;
+import io.redspace.ironsspellbooks.api.events.SpellCooldownAddedEvent;
 import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
 import io.redspace.ironsspellbooks.api.events.SpellPreCastEvent;
 import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellDataRegistryHolder;
+import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.api.spells.SpellData;
 import io.redspace.ironsspellbooks.api.spells.SpellSlot;
@@ -47,7 +50,7 @@ public class RecklessUtterance extends SpellCuriosItem  {
                         new SpellDataRegistryHolder(SpellReg.ARCANE_OVERDRIVE_SPELL, 1)
         });
     }
-
+/*
     @SubscribeEvent
     public static void onSpellSelectionInit(SpellSelectionManager.SpellSelectionEvent event) {
         Player player = event.getEntity();
@@ -72,7 +75,7 @@ public class RecklessUtterance extends SpellCuriosItem  {
             event.addSelectionOption(spell, slotId, i);
         }
     }
-
+*/
     @SubscribeEvent
     public static void inASilentWay(SpellPreCastEvent event) {
         event.getEntity().getCapability(OverloadProvider.CAPABILITY).ifPresent(data -> {
@@ -105,6 +108,16 @@ public class RecklessUtterance extends SpellCuriosItem  {
                 data.addOverload(addOverload);
                 data.sync((ServerPlayer) event.getEntity());
             });
+        }
+    }
+    @SubscribeEvent
+    public static void onSpellCooldownAddedEvent(SpellCooldownAddedEvent.Pre event)
+    {
+        if (event.getCastSource() == CastSource.SCROLL) return;
+        Player serverPlayer = event.getEntity();
+        String spellId = event.getSpell().getSpellId();
+        if(serverPlayer.hasEffect(MobEffectReg.ARCANE_OVERDRIVE.get()) && !spellId.equals(CasterCuriosBonus.id("arcane_overdrive").toString())) {
+            event.setEffectiveCooldown( 0 );
         }
     }
 

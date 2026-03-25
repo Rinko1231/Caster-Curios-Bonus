@@ -33,6 +33,7 @@ public class CasterCuriosBonusConfig {
     // calamity resonator
     // ==============================
     public static ForgeConfigSpec.DoubleValue calamityResonatorSplashPercent;
+    public static ForgeConfigSpec.DoubleValue calamityResonatorSplashRadius;
     public static ForgeConfigSpec.IntValue calamityResonatorCooldownTicks;
 
     // ==============================
@@ -110,6 +111,8 @@ public class CasterCuriosBonusConfig {
         BUILDER.push("Calamity Resonator Settings");
         calamityResonatorSplashPercent = BUILDER
                 .defineInRange("calamityResonatorSplashPercent", 0.25F, 0.0, 1.0);
+        calamityResonatorSplashRadius = BUILDER
+                .defineInRange("calamityResonatorSplashRadius", 1.5F, 0.01F, 32.0F);
         calamityResonatorCooldownTicks = BUILDER
                 .defineInRange("calamityResonatorCooldownTicks", 40, 1, 1919810);
 

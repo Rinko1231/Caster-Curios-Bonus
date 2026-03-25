@@ -51,7 +51,7 @@ public class CalamityResonator extends SimpleDescriptiveCurio {
             return;
         }
         Vec3 pos = target.position();
-        float radius = 1.5F;
+        float radius = CasterCuriosBonusConfig.calamityResonatorSplashRadius.get().floatValue();
         Vector3f color = spellSource.spell().getSchoolType().getTargetingColor();
 
         MyUtils.spawnParticlesWithRange(
