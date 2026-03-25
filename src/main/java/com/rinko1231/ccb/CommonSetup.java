@@ -19,7 +19,7 @@ import static com.rinko1231.ccb.CasterCuriosBonus.MODID;
 @EventBusSubscriber(modid = MODID)
 public class CommonSetup {
 
-
+/*
     @SubscribeEvent
     public static void onChat(ServerChatEvent event) {
 
@@ -47,6 +47,7 @@ public class CommonSetup {
             }
         }
     }
+    */
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
