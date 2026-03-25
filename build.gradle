@@ -135,11 +135,13 @@ dependencies {
     implementation "curse.maven:curios-309927:6529130"
     implementation "curse.maven:lionfish-api-1001614:6168249"
 
+    compileOnly "curse.maven:epic-knights-armor-and-weapons-509041:7089984"
+
     implementation "curse.maven:geckolib-388172:6659026"
     runtimeOnly "curse.maven:playeranimator-658587:6024462"
     implementation "curse.maven:better-combat-by-daedelus-639842:6532547"
-    implementation "curse.maven:irons-spells-n-spellbooks-855414:7036419"
-
+    //implementation "curse.maven:irons-spells-n-spellbooks-855414:7036419"
+    implementation "curse.maven:irons-spells-n-spellbooks-855414:7691161"
     runtimeOnly "curse.maven:better-third-person-435044:5833474"
 
     runtimeOnly "curse.maven:jupiter-1072905:6770505"
