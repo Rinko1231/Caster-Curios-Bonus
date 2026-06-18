@@ -36,6 +36,7 @@ public class CalamityResonator extends SimpleDescriptiveCurio {
     @SubscribeEvent
     public static void onSpellDamage(SpellDamageEvent event) {
         if (event.getEntity().level().isClientSide) return;
+        if (event.getEntity() instanceof FrozenHumanoid) return;
         SpellDamageSource spellSource = event.getSpellDamageSource();
         if (spellSource.spell() == null) return;
         LivingEntity target = event.getEntity();
@@ -70,7 +71,9 @@ public class CalamityResonator extends SimpleDescriptiveCurio {
         List<LivingEntity> nearby = target.level().getEntitiesOfClass(
                 LivingEntity.class,
                 target.getBoundingBox().inflate(radius),
-                e -> e != target && e.isAlive() && !DamageSources.isFriendlyFireBetween(player, e)
+                e -> e != target
+                        && e.isAlive() && !DamageSources.isFriendlyFireBetween(player, e)
+                        && !(e instanceof FrozenHumanoid)
         );
         if (!nearby.isEmpty()) {
             ResonanceDamageSource resonanceSource =
