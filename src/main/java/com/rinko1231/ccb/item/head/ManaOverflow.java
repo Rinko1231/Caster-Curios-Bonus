@@ -66,6 +66,6 @@ public class ManaOverflow extends SimpleDescriptiveCurio {
                 player, ItemReg.MANA_OVERFLOW.get()
         )) return;
         float base = event.getHealAmount();
-        event.getTargetEntity().heal(base * (CasterCuriosBonusConfig.manaOverflowExtraDamageMultiplier.get().floatValue()-1.0f)); // 额外+30%
+        event.getTargetEntity().heal(base * (CasterCuriosBonusConfig.manaOverflowExtraHealMultiplier.get().floatValue()-1.0f)); // 额外+30%
     }
 }
