@@ -1,0 +1,30 @@
+# Gradle
+.gradle/
+build/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Eclipse / VS Code
+.classpath
+.project
+.settings/
+bin/
+.vscode/
+
+# Minecraft / NeoForge run directories
+run/
+run-data/
+
+# Local maven publishing output (see build.gradle -> publishing.repositories)
+repo/
+
+# OS / logs
+.DS_Store
+Thumbs.db
+*.log
+logs/
