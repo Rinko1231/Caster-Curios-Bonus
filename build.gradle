@@ -160,12 +160,12 @@ dependencies {
     implementation fg.deobf("curse.maven:cloth-config-348521:5729105")
     runtimeOnly fg.deobf("curse.maven:better-combat-by-daedelus-639842:5625757")
     runtimeOnly fg.deobf("curse.maven:potionlevelfix-1070801:6888486")
-    implementation fg.deobf("curse.maven:goety-586095:7235149")
+    //implementation fg.deobf("curse.maven:goety-586095:7235149")
 
-    implementation fg.deobf("curse.maven:grimoire-of-gaia-228948:7187135")
-    compileOnly fg.deobf("curse.maven:celestisynth-872712:6900952")
+    //implementation fg.deobf("curse.maven:grimoire-of-gaia-228948:7187135")
+    //compileOnly fg.deobf("curse.maven:celestisynth-872712:6900952")
 
-    runtimeOnly fg.deobf("curse.maven:goety-iron-link-1368946:7212826")
+    //runtimeOnly fg.deobf("curse.maven:goety-iron-link-1368946:7212826")
     //runtimeOnly fg.deobf("curse.maven:minecolonies-245506:7163006")
     //runtimeOnly fg.deobf("curse.maven:blockui-522992:7041657")
     //runtimeOnly fg.deobf("curse.maven:domum-ornamentum-527361:6870756")
@@ -180,16 +180,16 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:playeranimator-658587:4587214")
     implementation fg.deobf("curse.maven:geckolib-388172:6027567")
     implementation fg.deobf("curse.maven:caelus-308989:5281700")
-    implementation fg.deobf("curse.maven:irons-spells-n-spellbooks-855414:7691158")
+    implementation fg.deobf("curse.maven:irons-spells-n-spellbooks-855414:7907340")
     //implementation fg.deobf("curse.maven:irons-spells-n-spellbooks-855414:6833927")
     //implementation fg.deobf("curse.maven:tinkers-construct-74072:6777068")
     runtimeOnly fg.deobf("curse.maven:mantle-74924:6819217")
-    implementation fg.deobf("curse.maven:to-tweaks-irons-spells-1046916:6901041")
+    //implementation fg.deobf("curse.maven:to-tweaks-irons-spells-1046916:6901041")
     runtimeOnly fg.deobf("curse.maven:apothic-attributes-898963:5634071")
     runtimeOnly fg.deobf("curse.maven:placebo-283644:6274231")
 
-    runtimeOnly fg.deobf("curse.maven:lionfish-api-1001614:5922047")
-    runtimeOnly fg.deobf("curse.maven:lendercataclysm-551586:6906993")
+    //runtimeOnly fg.deobf("curse.maven:lionfish-api-1001614:5922047")
+    //runtimeOnly fg.deobf("curse.maven:lendercataclysm-551586:6906993")
     //implementation fg.deobf("curse.maven:cerbons-api-955605:5050080")
     //implementation fg.deobf("curse.maven:bosses-of-mass-destruction-forge-941573:5067728")
 
@@ -201,14 +201,15 @@ dependencies {
 
     runtimeOnly fg.deobf("curse.maven:create-328085:6641603")
 
-    compileOnly fg.deobf("curse.maven:alexs-mobs-426558:5698791")
+    //compileOnly fg.deobf("curse.maven:alexs-mobs-426558:5698791")
     runtimeOnly fg.deobf("curse.maven:citadel-331936:6702068")
-    runtimeOnly fg.deobf("curse.maven:alexs-caves-924854:5848216")
+    //runtimeOnly fg.deobf("curse.maven:alexs-caves-924854:5848216")
 
     //runtimeOnly fg.deobf("curse.maven:kubejs-irons-spells-980834:5736059")
     //runtimeOnly fg.deobf("curse.maven:kubejs-238086:5853326")
     //runtimeOnly fg.deobf("curse.maven:rhino-416294:6186971")
     runtimeOnly fg.deobf("curse.maven:architectury-api-419699:5137938")
+    implementation fg.deobf("curse.maven:irons-lib-1492763:8207055")
     //runtimeOnly fg.deobf("curse.maven:mekanism-268560:6258796")
     //runtimeOnly fg.deobf("curse.maven:timeless-and-classics-zero-1028108:6632240")
     // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
