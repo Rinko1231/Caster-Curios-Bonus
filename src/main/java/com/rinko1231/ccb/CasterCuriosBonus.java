@@ -173,12 +173,17 @@ public class CasterCuriosBonus {
 
         OverloadSyncedData data = OverloadClientData.get(player);
         int overload = data.getOverload();
+        int maxOverload = data.getMaxOverload();
+        if (maxOverload <= 0) {
+            // 客户端还没收到同步包时，用配置里的上限兜底，避免显示 0 / 0
+            maxOverload = CasterCuriosBonusConfig.recklessUtteranceMaxOverload.get();
+        }
         int silentTicks = data.getSilentTicks();
         float silentSeconds = silentTicks / 20f;
         // 本地化 key: tooltip.item.caster_curios_bonus.reckless_utterance.overload
         Component messageOverload = Component.translatable(
                 "tooltip.item.caster_curios_bonus.reckless_utterance.overload",
-                overload
+                overload, maxOverload
         ).withStyle(ChatFormatting.RED);
         event.getToolTip().add(messageOverload);
 

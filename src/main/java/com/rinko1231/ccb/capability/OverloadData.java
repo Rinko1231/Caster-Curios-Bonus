@@ -14,7 +14,6 @@ import net.minecraft.server.level.ServerPlayer;
 public class OverloadData{
 
     private int overload = 0;
-    private int maxOverload = CasterCuriosBonusConfig.recklessUtteranceMaxOverload.get();  // 默认值，可调
     private int silentTicks = 0;
 
     //private boolean overloading = false;
@@ -26,17 +25,19 @@ public class OverloadData{
 
     
     public void addOverload(int amount) {
-        overload = Math.min(overload + amount, maxOverload);
+        overload = Math.min(overload + amount, getMaxOverload());
     }
 
     
     public void setOverload(int value) {
-        overload = Math.max(0, Math.min(value, maxOverload));
+        overload = Math.max(0, Math.min(value, getMaxOverload()));
     }
 
-    
+    /**
+     * 上限始终以服务端当前配置为准，不缓存到字段里，配置改动后立即生效。
+     */
     public int getMaxOverload() {
-        return maxOverload;
+        return CasterCuriosBonusConfig.recklessUtteranceMaxOverload.get();
     }
 /*
     
@@ -49,12 +50,6 @@ public class OverloadData{
         return overloading;
     }
 */
-    
-    public void setMaxOverload(int value) {
-        maxOverload = Math.max(1, value);
-        overload = Math.min(overload, maxOverload);
-    }
-
     
     public int getSilentTicks() {
         return silentTicks;
@@ -69,15 +64,21 @@ public class OverloadData{
     public void tick(ServerPlayer player) {
 
         int oldSilent = silentTicks;
+        int max = getMaxOverload();
+
+        // 配置调小后，避免旧的过载值溢出
+        if (overload > max) {
+            overload = max;
+        }
 
         if (silentTicks > 0) {
             silentTicks--;
             if (silentTicks == 0) {
                 overload = 0;
             }
-        } else if (overload >= maxOverload) {
+        } else if (overload >= max) {
             silentTicks = CasterCuriosBonusConfig.recklessUtteranceSilentTicks.get();
-            overload = maxOverload;
+            overload = max;
 
             player.removeEffect(MobEffectReg.ARCANE_OVERDRIVE.get());
             player.displayClientMessage(
@@ -95,7 +96,7 @@ public class OverloadData{
     public void sync(ServerPlayer player) {
         OverloadSyncedData data = new OverloadSyncedData(player.getId());
         data.setOverload(overload);
-        data.setMaxOverload(maxOverload);
+        data.setMaxOverload(getMaxOverload());
         data.setSilentTicks(silentTicks);
 
         CCBMessages.sendToPlayer(new SyncOverloadPacket(data), player);
@@ -106,15 +107,13 @@ public class OverloadData{
     
     public void saveNBT(CompoundTag tag) {
         tag.putInt("Overload", overload);
-        tag.putInt("MaxOverload", maxOverload);
         tag.putInt("SilentTicks", silentTicks);
         //tag.putBoolean("isOverloading", overloading);
     }
 
     
     public void loadNBT(CompoundTag tag) {
-        overload = tag.getInt("Overload");
-        maxOverload = tag.getInt("MaxOverload");
+        overload = Math.max(0, Math.min(tag.getInt("Overload"), getMaxOverload()));
         silentTicks = tag.getInt("SilentTicks");
         //overloading = tag.getBoolean("isOverloading");
     }

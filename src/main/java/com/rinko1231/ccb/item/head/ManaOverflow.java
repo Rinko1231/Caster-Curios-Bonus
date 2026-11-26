@@ -50,12 +50,13 @@ public class ManaOverflow extends SimpleDescriptiveCurio {
 
     @SubscribeEvent
     public static void onSpellDamage(SpellDamageEvent event) {
-        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        // SpellDamageEvent.getEntity() 是受害者，施法者要从伤害源里取
+        if (!(event.getSpellDamageSource().getEntity() instanceof ServerPlayer player)) return;
         if (!MyUtils.isEquipCurios(
                 player, ItemReg.MANA_OVERFLOW.get()
         )) return;
-        float base = event.getOriginalAmount();
-        event.setAmount(base * CasterCuriosBonusConfig.manaOverflowExtraDamageMultiplier.get().floatValue());
+        event.setAmount(event.getAmount()
+                * CasterCuriosBonusConfig.manaOverflowExtraDamageMultiplier.get().floatValue());
     }
 
 
@@ -66,6 +67,6 @@ public class ManaOverflow extends SimpleDescriptiveCurio {
                 player, ItemReg.MANA_OVERFLOW.get()
         )) return;
         float base = event.getHealAmount();
-        event.getTargetEntity().heal(base * (CasterCuriosBonusConfig.manaOverflowExtraDamageMultiplier.get().floatValue()-1.0f)); // 额外+30%
+        event.getTargetEntity().heal(base * (CasterCuriosBonusConfig.manaOverflowExtraHealMultiplier.get().floatValue() - 1.0f)); // 额外治疗量
     }
 }

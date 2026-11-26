@@ -6,7 +6,7 @@ import com.rinko1231.ccb.utils.MyUtils;
 import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
 import io.redspace.ironsspellbooks.item.curios.SimpleDescriptiveCurio;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,8 +25,7 @@ public class ZephyrBoon extends SimpleDescriptiveCurio {
     @SubscribeEvent
     public static void onSpellCastLetsFly(SpellOnCastEvent event)
     {
-        Player player = event.getEntity();
-        if (player.level().isClientSide()) return;
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
         if (!MyUtils.isEquipCurios(player, ItemReg.ZEPHYR_BOON.get())) return;
 

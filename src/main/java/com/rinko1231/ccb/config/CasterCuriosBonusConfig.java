@@ -68,6 +68,7 @@ public class CasterCuriosBonusConfig {
     public static ForgeConfigSpec.IntValue recklessUtteranceMaxOverload;
     public static ForgeConfigSpec.IntValue recklessUtteranceSilentTicks;
     public static ForgeConfigSpec.IntValue recklessUtteranceArcaneOverdriveDurationTicks;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> recklessUtteranceCooldownBlacklist;
 
     // ==============================
     // All By Movement
@@ -84,7 +85,7 @@ public class CasterCuriosBonusConfig {
                         element -> element instanceof String);
         EurekaExtraCDMultiplier = BUILDER
                 .comment("Multiplier for Extra CD from additional spell power")
-                .defineInRange("EurekaExtraCDMultiplier", 0.33F, 0.0, 10.0);
+                .defineInRange("EurekaExtraCDMultiplier", 0.20F, 0.0, 10.0);
 
         BUILDER.pop();
 
@@ -127,6 +128,12 @@ public class CasterCuriosBonusConfig {
                 .defineInRange("recklessUtteranceSilentTicks", 1200, 1, Integer.MAX_VALUE);
         recklessUtteranceArcaneOverdriveDurationTicks = BUILDER
                 .defineInRange("recklessUtteranceArcaneOverdriveDurationTicks", 200, 1, 3000);
+        recklessUtteranceCooldownBlacklist = BUILDER
+                .comment("Spells that keep their cooldown even while Arcane Overdrive is active "
+                        + "(format: modid:spell_id, e.g. irons_spellbooks:heartstop)")
+                .defineList("Cooldown Blacklist",
+                        List.of("irons_spellbooks:heartstop"),
+                        element -> element instanceof String);
 
 
         BUILDER.pop();

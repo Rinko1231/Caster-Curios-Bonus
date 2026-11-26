@@ -28,7 +28,7 @@
 
   "item.caster_curios_bonus.reckless_utterance": "Reckless Utterance",
   "item.caster_curios_bonus.reckless_utterance.desc": "Allow you to cast Arcane Overdrive",
-  "tooltip.item.caster_curios_bonus.reckless_utterance.overload": "Overload: %s",
+  "tooltip.item.caster_curios_bonus.reckless_utterance.overload": "Overload: %s / %s",
   "tooltip.item.caster_curios_bonus.reckless_utterance.silent": "Silent Time: %ss",
   "message.caster_curios_bonus.reckless_utterance.silent_cast_blocked": "You are overwhelmed and cannot cast spells! (%s s left)",
   "message.caster_curios_bonus.reckless_utterance.become_silent": "You are overwhelmed and cannot cast spells!",

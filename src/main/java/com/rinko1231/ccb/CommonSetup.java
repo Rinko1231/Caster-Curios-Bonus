@@ -10,6 +10,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
 
 import static com.rinko1231.ccb.CasterCuriosBonus.MODID;
 
@@ -37,6 +38,31 @@ public class CommonSetup {
                                     newStore.loadNBT(tag);
                                 }));
         event.getOriginal().invalidateCaps();
+        syncOverload(newPlayer);
+    }
+
+    /**
+     * 登录时需要把服务端的过载数据（含上限）同步给客户端，
+     * 否则客户端 OverloadClientData 一直是 0，tooltip 显示不出正确数值。
+     */
+    @SubscribeEvent
+    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof ServerPlayer sp) {
+            syncOverload(sp);
+        }
+    }
+
+    private static void syncOverload(ServerPlayer player) {
+        player.getCapability(OverloadProvider.CAPABILITY).ifPresent(data -> data.sync(player));
+    }
+
+    //死亡重生后连接已就绪，再同步一次（Clone 事件里发包有时早于客户端准备好）。
+
+    @SubscribeEvent
+    public static void onPlayerRespawn(PlayerEvent.@NotNull PlayerRespawnEvent event) {
+        if (event.getEntity() instanceof ServerPlayer sp) {
+            syncOverload(sp);
+        }
     }
 
 

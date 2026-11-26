@@ -11,8 +11,8 @@ import io.redspace.ironsspellbooks.item.curios.SimpleDescriptiveCurio;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -34,10 +34,9 @@ public class VenomousAssault extends SimpleDescriptiveCurio {
     public static void onSpellDamage(SpellDamageEvent event) {
         SpellDamageSource spellSource = event.getSpellDamageSource();
         LivingEntity target = event.getEntity();
-        Entity attackerEntity = spellSource.getEntity();
-        if (!(attackerEntity instanceof LivingEntity attacker)) return;
+        if (!(spellSource.getEntity() instanceof ServerPlayer player)) return;
 
-        boolean hasCurio = MyUtils.isEquipCurios(attacker, ItemReg.VENOMOUS_ASSAULT.get());
+        boolean hasCurio = MyUtils.isEquipCurios(player, ItemReg.VENOMOUS_ASSAULT.get());
         if (!hasCurio) return;
 
         AbstractSpell spell = spellSource.spell();
@@ -65,10 +64,10 @@ public class VenomousAssault extends SimpleDescriptiveCurio {
         // 移除无敌帧
         target.invulnerableTime = 0;
 
-        target.hurt(target.damageSources().indirectMagic(attacker, attacker), extraDamage);
+        target.hurt(target.damageSources().indirectMagic(player, player), extraDamage);
 
 
-        if (attacker.level() instanceof ServerLevel serverLevel) {
+        if (player.level() instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.DAMAGE_INDICATOR,
                     target.getX(), target.getY() + target.getBbHeight() * 0.5, target.getZ(),
                     8, 0.3, 0.5, 0.3, 0.1);
