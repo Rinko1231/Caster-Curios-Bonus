@@ -84,7 +84,7 @@ public class CasterCuriosBonusConfig {
                         element -> element instanceof String);
         EurekaExtraCDMultiplier = BUILDER
                 .comment("Multiplier for Extra CD from additional spell power")
-                .defineInRange("EurekaExtraCDMultiplier", 0.33F, 0.0, 10.0);
+                .defineInRange("EurekaExtraCDMultiplier", 0.20F, 0.0, 10.0);
 
         BUILDER.pop();
 
