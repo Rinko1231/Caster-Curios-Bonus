@@ -51,6 +51,7 @@ public class CasterCuriosBonusConfig {
     public static ModConfigSpec.IntValue recklessUtteranceMaxOverload;
     public static ModConfigSpec.IntValue recklessUtteranceSilentTicks;
     public static ModConfigSpec.IntValue recklessUtteranceArcaneOverdriveDurationTicks;
+    public static ModConfigSpec.ConfigValue<List<? extends String>> recklessUtteranceCooldownBlacklist;
     // ==============================
     // Crimson Pledge
     // ==============================
@@ -135,11 +136,20 @@ public class CasterCuriosBonusConfig {
         // -------- Reckless Utterance --------
         BUILDER.push("Reckless Utterance Settings");
         recklessUtteranceMaxOverload = BUILDER
+                .comment("Maximum overload Reckless Utterance can accumulate before silencing the caster")
                 .defineInRange("recklessUtteranceMaxOverload", 200, 1, Integer.MAX_VALUE);
         recklessUtteranceSilentTicks = BUILDER
+                .comment("How long the caster is silenced once overload is full (in ticks)")
                 .defineInRange("recklessUtteranceSilentTicks", 1200, 1, Integer.MAX_VALUE);
         recklessUtteranceArcaneOverdriveDurationTicks = BUILDER
+                .comment("Duration of Arcane Overdrive granted by Reckless Utterance (in ticks)")
                 .defineInRange("recklessUtteranceArcaneOverdriveDurationTicks", 200, 1, 3000);
+        recklessUtteranceCooldownBlacklist = BUILDER
+                .comment("Spells that keep their cooldown even while Arcane Overdrive is active "
+                        + "(format: modid:spell_id, e.g. irons_spellbooks:heartstop)")
+                .defineList("Cooldown Blacklist",
+                        List.of("irons_spellbooks:heartstop"),
+                        element -> element instanceof String);
 
 
         BUILDER.pop();

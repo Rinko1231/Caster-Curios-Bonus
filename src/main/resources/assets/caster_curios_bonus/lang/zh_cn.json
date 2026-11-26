@@ -27,7 +27,7 @@
 
   "item.caster_curios_bonus.reckless_utterance": "狂言之冠",
   "item.caster_curios_bonus.reckless_utterance.desc": "允许你释放奥术超载",
-  "tooltip.item.caster_curios_bonus.reckless_utterance.overload": "过载值：%s",
+  "tooltip.item.caster_curios_bonus.reckless_utterance.overload": "过载值：%s / %s",
   "tooltip.item.caster_curios_bonus.reckless_utterance.silent": "沉默时间：%s秒",
   "message.caster_curios_bonus.reckless_utterance.silent_cast_blocked": "你累极了，无法施法！(剩余%s秒)",
   "message.caster_curios_bonus.reckless_utterance.become_silent": "你已因过载而陷入沉默。",

@@ -30,7 +30,6 @@ import static com.rinko1231.ccb.CasterCuriosBonus.MODID;
 public class Eureka extends SimpleDescriptiveCurio {
 
     //private static final UUID EUREKA_POWER_TO_CD_UUID = UUID.fromString("7e6a1e8a-0e8e-4f6b-8a5c-1b7c7f5947a5");
-    private int tickCounter = 0;
 
     public Eureka() {
         super(ItemPropertiesHelper.equipment().stacksTo(1).rarity(Rarity.EPIC), "charm");
@@ -40,12 +39,9 @@ public class Eureka extends SimpleDescriptiveCurio {
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         super.curioTick(slotContext, stack);
 
-        if (!(slotContext.entity() instanceof Player player)) return;
-        if (player.level().isClientSide) return;
+        if (!(slotContext.entity() instanceof ServerPlayer player)) return;
 
-        tickCounter++;
-        if (tickCounter < 20) return; //每秒刷新一次
-        tickCounter = 0;
+        if (player.tickCount % 20 != 0) return; //每秒刷新一次
 
         var cdAttr = player.getAttribute(AttributeRegistry.COOLDOWN_REDUCTION);
         if (cdAttr == null) return;

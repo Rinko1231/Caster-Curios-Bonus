@@ -12,8 +12,8 @@ import io.redspace.ironsspellbooks.item.curios.SimpleDescriptiveCurio;
 import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.phys.Vec3;
@@ -41,7 +41,7 @@ public class CalamityResonator extends SimpleDescriptiveCurio {
         SpellDamageSource spellSource = event.getSpellDamageSource();
         if (spellSource.spell() == null) return;
         LivingEntity target = event.getEntity();
-        if (!(spellSource.getEntity() instanceof Player player)) return;
+        if (!(spellSource.getEntity() instanceof ServerPlayer player)) return;
 
         Item resonator = ItemReg.CALAMITY_RESONATOR.get();
 

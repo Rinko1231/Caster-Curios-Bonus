@@ -156,7 +156,7 @@ dependencies {
     runtimeOnly "curse.maven:kubejs-irons-spells-980834:6556148"
 
     runtimeOnly "curse.maven:mmmmmmmmmmmm-225738:6826533"
-    runtimeOnly "curse.maven:selene-499980:6818413"
+    runtimeOnly "curse.maven:selene-499980:9780727"
 
     runtimeOnly "curse.maven:prickle-1023259:6910558"
     runtimeOnly "curse.maven:bookshelf-228525:6909578"

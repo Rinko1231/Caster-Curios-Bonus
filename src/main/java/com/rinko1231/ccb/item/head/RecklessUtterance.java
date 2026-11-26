@@ -4,6 +4,7 @@ package com.rinko1231.ccb.item.head;
 import com.rinko1231.ccb.CasterCuriosBonus;
 import com.rinko1231.ccb.capability.OverloadClientData;
 import com.rinko1231.ccb.capability.OverloadData;
+import com.rinko1231.ccb.config.CasterCuriosBonusConfig;
 import com.rinko1231.ccb.init.MobEffectReg;
 import com.rinko1231.ccb.init.ModAttachments;
 import com.rinko1231.ccb.init.SpellReg;
@@ -102,12 +103,13 @@ public class RecklessUtterance extends SpellCuriosItem  {
         }
 
         int overload = OverloadClientData.getOverload();
+        int maxOverload = OverloadClientData.getMaxOverload();
         int silentTicks = OverloadClientData.getSilentTicks();
         float seconds = silentTicks / 20f;
             // 本地化 key: tooltip.item.caster_curios_bonus.reckless_utterance.overload
             Component messageOverload = Component.translatable(
                     "tooltip.item.caster_curios_bonus.reckless_utterance.overload",
-                    overload
+                    overload, maxOverload
             ).withStyle(ChatFormatting.RED);
             event.getToolTip().add(messageOverload);
 
@@ -121,7 +123,8 @@ public class RecklessUtterance extends SpellCuriosItem  {
 
     @SubscribeEvent
     public static void inASilentWay(SpellPreCastEvent event) {
-        OverloadData data = event.getEntity().getData(ModAttachments.OVERLOAD);
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        OverloadData data = player.getData(ModAttachments.OVERLOAD);
             if (data.getSilentTicks() > 0) {
                 float secondsLeft = data.getSilentTicks() / 20f;
 
@@ -131,7 +134,7 @@ public class RecklessUtterance extends SpellCuriosItem  {
                         String.format("%.1f", secondsLeft)
                 ).withStyle(ChatFormatting.RED);
 
-                event.getEntity().displayClientMessage(message, true);
+                player.displayClientMessage(message, true);
                 event.setCanceled(true);
             }
 
@@ -140,18 +143,18 @@ public class RecklessUtterance extends SpellCuriosItem  {
     @SubscribeEvent
     public static void JustCast(SpellOnCastEvent event)
     {
-        if(event.getEntity().hasEffect(MobEffectReg.ARCANE_OVERDRIVE)){
-            var manaAttr = event.getEntity().getAttribute(AttributeRegistry.MAX_MANA);
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        if(player.hasEffect(MobEffectReg.ARCANE_OVERDRIVE)){
+            var manaAttr = player.getAttribute(AttributeRegistry.MAX_MANA);
             if (manaAttr == null) return;
             double maxMana = manaAttr.getValue();
             int originalManaCost = event.getOriginalManaCost();
             int spellLevel = event.getSpellLevel();
             int addOverload = (int) ((originalManaCost/maxMana) *100D * (0.7 + 0.1 * spellLevel));
             event.setManaCost(0);
-            OverloadData data = event.getEntity().getData(ModAttachments.OVERLOAD);
+            OverloadData data = player.getData(ModAttachments.OVERLOAD);
             data.addOverload(addOverload);
-            OverloadData dataOverload = event.getEntity().getData(ModAttachments.OVERLOAD); // 示例
-            PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new SyncOverloadPacket(dataOverload));
+            PacketDistributor.sendToPlayer(player, new SyncOverloadPacket(data));
         }
     }
 
@@ -159,10 +162,24 @@ public class RecklessUtterance extends SpellCuriosItem  {
     public static void onSpellCooldownAddedEvent(SpellCooldownAddedEvent.Pre event)
     {
         if (event.getCastSource() == CastSource.SCROLL) return;
-        Player serverPlayer = event.getEntity();
+        if (!(event.getEntity() instanceof ServerPlayer serverPlayer)) return;
         String spellId = event.getSpell().getSpellId();
-        if(serverPlayer.hasEffect(MobEffectReg.ARCANE_OVERDRIVE) && !spellId.equals(CasterCuriosBonus.id("arcane_overdrive").toString())) {
+        if(serverPlayer.hasEffect(MobEffectReg.ARCANE_OVERDRIVE)
+                && !spellId.equals(CasterCuriosBonus.id("arcane_overdrive").toString())
+                && !keepsCooldown(spellId)) {
             event.setEffectiveCooldown( 0 );
         }
+    }
+
+    /**
+     * 黑名单中的法术即使处于奥术超载状态，也保留原本的冷却时间。
+     */
+    private static boolean keepsCooldown(String spellId) {
+        for (String entry : CasterCuriosBonusConfig.recklessUtteranceCooldownBlacklist.get()) {
+            if (entry != null && entry.trim().equals(spellId)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -8,7 +8,7 @@ import io.redspace.ironsspellbooks.api.events.SpellCooldownAddedEvent;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.item.curios.SimpleDescriptiveCurio;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 
@@ -36,7 +36,7 @@ public class AllByMovement extends SimpleDescriptiveCurio {
     public static void onSpellCooldownAddedEvent(SpellCooldownAddedEvent.Pre event)
     {
         if (event.getCastSource() == CastSource.SCROLL) return;
-        Player serverPlayer = event.getEntity();
+        if (!(event.getEntity() instanceof ServerPlayer serverPlayer)) return;
         if (!MyUtils.isEquipCurios(serverPlayer, ItemReg.ALL_BY_MOVEMENT.get())) return;
 
         String spellId = event.getSpell().getSpellId();

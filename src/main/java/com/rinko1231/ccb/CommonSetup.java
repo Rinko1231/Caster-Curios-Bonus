@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.ServerChatEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -60,4 +61,29 @@ public class CommonSetup {
             data.tick(sp);
         }
 }
+
+    /**
+     * 登录时需要把服务端的过载数据（含上限）同步给客户端，
+     * 否则客户端 OverloadClientData一直是0，tooltip显示不出正确数值。
+     */
+    @SubscribeEvent
+    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof ServerPlayer sp) {
+            syncOverload(sp);
+        }
+    }
+
+    /**
+     * 死亡重生 / 从末地返回后重新同步一次。
+     */
+    @SubscribeEvent
+    public static void onPlayerClone(PlayerEvent.Clone event) {
+        if (event.getEntity() instanceof ServerPlayer sp) {
+            syncOverload(sp);
+        }
+    }
+
+    private static void syncOverload(ServerPlayer player) {
+        PacketDistributor.sendToPlayer(player, new SyncOverloadPacket(player.getData(ModAttachments.OVERLOAD)));
+    }
 }

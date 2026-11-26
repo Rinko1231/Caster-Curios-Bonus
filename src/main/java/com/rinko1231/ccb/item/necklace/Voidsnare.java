@@ -8,9 +8,9 @@ import io.redspace.ironsspellbooks.item.curios.SimpleDescriptiveCurio;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import io.redspace.ironsspellbooks.util.ParticleHelper;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -38,7 +38,7 @@ public class Voidsnare extends SimpleDescriptiveCurio {
         if (CasterCuriosBonusConfig.VoidsnareSpellDamageIsNecessary.get()) {
             if(!(event.getSource() instanceof SpellDamageSource)) return;
         }
-        if (!(event.getSource().getEntity() instanceof Player player)) return;
+        if (!(event.getSource().getEntity() instanceof ServerPlayer player)) return;
 
         if (!MyUtils.isEquipCurios(player, ItemReg.VOIDSNARE.get())) return;
 

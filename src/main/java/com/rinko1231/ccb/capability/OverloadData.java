@@ -19,22 +19,27 @@ public class OverloadData implements ISerializable, INBTSerializable<CompoundTag
 
     private int overload = 0;
     private int silentTicks = 0;
-    private int maxOverload = 200;
 
     public OverloadData() { }
 
     public OverloadData(ServerPlayer player) { }
 
     public int getOverload() { return overload; }
-    public int getMaxOverload() { return maxOverload; }
+
+    /**
+     * 上限始终以服务端当前配置为准，不缓存到字段里，配置改动后立即生效。
+     */
+    public int getMaxOverload() {
+        return CasterCuriosBonusConfig.recklessUtteranceMaxOverload.get();
+    }
+
     public int getSilentTicks() { return silentTicks; }
 
     public void addOverload(int v) {
-        overload = Math.min(overload + v, maxOverload);
+        overload = Math.min(overload + v, getMaxOverload());
     }
     public void setOverload(int t) {
-        this.overload = Math.clamp(t,0,maxOverload);
-
+        this.overload = Math.clamp(t, 0, getMaxOverload());
     }
     public void setSilentTicks(int t) {
         this.silentTicks = t;
@@ -44,15 +49,21 @@ public class OverloadData implements ISerializable, INBTSerializable<CompoundTag
     public void tick(ServerPlayer player) {
 
         int oldSilent = silentTicks;
+        int max = getMaxOverload();
+
+        // 配置调小后，避免旧的过载值溢出
+        if (overload > max) {
+            overload = max;
+        }
 
         if (silentTicks > 0) {
             silentTicks--;
             if (silentTicks == 0) {
                 overload = 0;
             }
-        } else if (overload >= maxOverload) {
+        } else if (overload >= max) {
             silentTicks = CasterCuriosBonusConfig.recklessUtteranceSilentTicks.get();
-            overload = maxOverload;
+            overload = max;
 
             player.removeEffect(MobEffectReg.ARCANE_OVERDRIVE);
             player.displayClientMessage(
@@ -78,19 +89,17 @@ public class OverloadData implements ISerializable, INBTSerializable<CompoundTag
 
     @Override
     public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-        overload = nbt.getInt("o");
+        overload = Math.clamp(nbt.getInt("o"), 0, getMaxOverload());
         silentTicks = nbt.getInt("s");
     }
 
     public void writeToBuffer(FriendlyByteBuf buffer) {
-        buffer.writeFloat(this.overload);
+        buffer.writeInt(this.overload);
         buffer.writeInt(this.silentTicks);
-        buffer.writeInt(this.maxOverload);
     }
 
     public void readFromBuffer(FriendlyByteBuf buffer) {
         this.overload = buffer.readInt();
         this.silentTicks = buffer.readInt();
-        this.maxOverload = buffer.readInt();
     }
 }

@@ -30,7 +30,7 @@ import static com.rinko1231.ccb.CasterCuriosBonus.MODID;
 public class MindToMatter extends SimpleDescriptiveCurio {
 
     //private static final UUID HTM_MANA_TO_HEALTH_BONUS_UUID = UUID.fromString("caa6c35c-7b4c-4af5-99ce-9151a8fbb403");
-    private int tickCounterHTM = 0;
+
     public MindToMatter() {
         super(ItemPropertiesHelper.equipment().stacksTo(1).rarity(Rarity.EPIC), Curios.NECKLACE_SLOT);
     }
@@ -39,12 +39,9 @@ public class MindToMatter extends SimpleDescriptiveCurio {
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         super.curioTick(slotContext, stack);
 
-        if (!(slotContext.entity() instanceof net.minecraft.world.entity.player.Player player)) return;
+        if (!(slotContext.entity() instanceof ServerPlayer player)) return;
 
-
-        tickCounterHTM++;
-        if (tickCounterHTM < 10) return; //每半秒刷新一次
-        tickCounterHTM = 0;
+        if (player.tickCount % 10 != 0) return; //每半秒刷新一次
 
         var healthAttr = player.getAttribute(Attributes.MAX_HEALTH);
         if (healthAttr == null) return;
